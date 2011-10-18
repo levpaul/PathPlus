@@ -13,6 +13,43 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
+
+  
+  	<build>
+		<directory>${basedir}/build</directory>
+		<sourceDirectory>${basedir}/source</sourceDirectory>
+		<testSourceDirectory>${basedir}/test</testSourceDirectory>
+		<outputDirectory>${basedir}/build/classes</outputDirectory>
+		<testOutputDirectory>${basedir}/build/test-classes</testOutputDirectory>
+		
+		<resources>
+			<resource>
+				<directory>${basedir}/source/resources</directory>
+			</resource>
+		</resources>
+  
+  
+  
+	<plugins>
+		<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+		
+			<configuration>
+				<archive>
+					<manifest>
+					  <addClasspath>true</addClasspath>
+					  <mainClass>TestMaven</mainClass>
+					</manifest>
+				</archive>
+			</configuration>
+		
+		</plugin>
+	</plugins>
+
+	</build>
+  
 
   <dependencies>
     <dependency>
@@ -22,4 +59,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
 </project>
