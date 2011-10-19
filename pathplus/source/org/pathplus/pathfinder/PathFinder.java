@@ -1,9 +1,9 @@
-package org.pathplus.pathfinder.Impl;
+package org.pathplus.pathfinder;
 
-import org.pathplus.pathfinder.Internal.IPathFinder;
-import org.pathplus.utils.Impl.SearchAlgorithms;
-import org.pathplus.utils.Internal.IPath;
-import org.pathplus.utils.Internal.IState;
+import org.pathplus.utils.algorithms.SearchAlgorithms;
+import org.pathplus.utils.path.IPath;
+import org.pathplus.utils.state.IState;
+
 
 public class PathFinder implements IPathFinder{
 

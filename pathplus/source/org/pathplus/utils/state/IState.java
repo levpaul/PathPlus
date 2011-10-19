@@ -1,4 +1,4 @@
-package org.pathplus.utils.Internal;
+package org.pathplus.utils.state;
 
 
 public interface IState<T> extends Comparable<T>{

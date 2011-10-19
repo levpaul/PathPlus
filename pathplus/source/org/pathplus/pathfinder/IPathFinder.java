@@ -1,8 +1,9 @@
-package org.pathplus.pathfinder.Internal;
+package org.pathplus.pathfinder;
 
 
-import org.pathplus.utils.Internal.IPath;
-import org.pathplus.utils.Internal.IState;
+import org.pathplus.utils.path.IPath;
+import org.pathplus.utils.state.IState;
+
 
 
 

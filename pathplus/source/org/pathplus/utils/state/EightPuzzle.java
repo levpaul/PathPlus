@@ -1,4 +1,4 @@
-package org.pathplus.utils.Impl;
+package org.pathplus.utils.state;
 
 public class EightPuzzle extends State{
 

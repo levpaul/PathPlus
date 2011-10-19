@@ -1,4 +1,4 @@
-package org.pathplus.utils.Impl;
+package org.pathplus.utils.algorithms;
 
 public class SearchAlgorithms {
 

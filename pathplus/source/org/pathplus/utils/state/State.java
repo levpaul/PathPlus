@@ -1,6 +1,5 @@
-package org.pathplus.utils.Impl;
+package org.pathplus.utils.state;
 
-import org.pathplus.utils.Internal.IState;
 
 
 // TODO Must sort out the interface issue.
