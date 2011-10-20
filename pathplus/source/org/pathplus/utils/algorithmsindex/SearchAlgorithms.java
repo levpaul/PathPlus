@@ -1,4 +1,10 @@
-package org.pathplus.utils.algorithms;
+package org.pathplus.utils.algorithmsindex;
+
+/**
+ * 
+ * @author levi.lovelock
+ *
+ */
 
 public class SearchAlgorithms {
 
@@ -19,7 +25,15 @@ public class SearchAlgorithms {
 	// TODO Add reference to the paper - implement the algorithm.
 	public static final int BIMAX_BSF = 1;
 	
+	
+	// HPA* is a very commonly used hierarchical pathfinding algorithm in video games.
+	// TODO Add reference to Adi Botea.
+	public static final int HPA_STAR = 2;
+	
 	// Automatically Repairing A* - A good weighted A* algorithm
 	// TODO Add reference to the paper - implement the algorithm.
 	public static final int ARA_STAR = 1000;
+
+
+
 }
