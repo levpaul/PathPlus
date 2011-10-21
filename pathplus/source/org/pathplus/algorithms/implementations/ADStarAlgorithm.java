@@ -245,7 +245,7 @@ public class ADStarAlgorithm extends BaseAlgorithm{
 			if (s.checkDup(start))
 				start = s;
 
-			BaseState[] neighbours = s.getNeighbors();
+			BaseState[] neighbours = s.getNeighbours();
 			expanded += neighbours.length;
 
 			if (s.g_val > s.rhs) {

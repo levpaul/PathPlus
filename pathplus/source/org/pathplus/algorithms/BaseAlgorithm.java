@@ -1,6 +1,10 @@
 package org.pathplus.algorithms;
 
 
-public class BaseAlgorithm implements Algorithm {
 
+public abstract class BaseAlgorithm implements Algorithm {
+	
+
+	
+	
 }

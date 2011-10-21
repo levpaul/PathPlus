@@ -8,7 +8,19 @@ package org.pathplus.utils.state;
 
 public abstract class BaseState implements State<BaseState>{
 
+	// Local Variables.
+	
 	private double fValue, gValue, hValue;
+	private BaseState parent;
+	
+	// Constructors.
+	
+	public BaseState(){
+		gValue = 0;
+		hValue = calcHValue();
+		fValue = gValue + hValue;
+		parent = null;
+	}
 	
 	/**
 	 * 
@@ -20,6 +32,16 @@ public abstract class BaseState implements State<BaseState>{
 		fValue = gValue + hValue;
 	}
 	
+	
+	// Getters and Setters.
+	
+	public BaseState getParent(){
+		return parent;
+	}
+	
+	public void setParent(BaseState parent){
+		this.parent = parent;
+	}
 	
 	public double getGVal(){
 		return gValue;
@@ -35,6 +57,10 @@ public abstract class BaseState implements State<BaseState>{
 	
 	public int compareTo(BaseState s){
 		return (int) (this.fValue - s.fValue);
+	}
+	
+	public BaseState[] getNeighbours(){
+		return null;
 	}
 	
 }

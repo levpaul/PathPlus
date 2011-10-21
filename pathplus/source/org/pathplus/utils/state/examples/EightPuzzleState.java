@@ -1,3 +1,5 @@
+package org.pathplus.utils.state.examples;
+
 import java.awt.*;
 import java.util.*;
 import org.pathplus.utils.state.BaseState;
@@ -11,9 +13,9 @@ public class EightPuzzleState extends BaseState{
 	public double h_val = 0;
 	public double f_val = 0;
 	public boolean gExceed = false;
-	private int numEvals = 0;
+
 	EightPuzzleState origin;
-	FEightPuzzle oldParent;
+	EightPuzzleState oldParent;
 	public boolean dub, beenExpanded;
 	public int dir;
 	public int d;
@@ -22,23 +24,26 @@ public class EightPuzzleState extends BaseState{
 	public static double ep;
 	static public double fLim, gBLim, gFLim;
 
-	public String key = "";
+	private int key = 0;
 
 	public EightPuzzleState parent = null;
 
 	private Point[] goalStateTable = new Point[16];
 
 	public EightPuzzleState(int[][] state, int[][] goal, int d){
+		super();
 		dir = d;
 		this.state = state;//constructor
 		transformTable(goal);//creates lookup table for heuristic estimates
 		g_val = 0;
 		h_val = calcStartH();
 		f_val = g_val + h_val;
-		setKey();
+		generateKey();
 		beenExpanded = false;
 	}
-	public EightPuzzleState(FEightPuzzle x){
+	
+	public EightPuzzleState(EightPuzzleState x){
+		super(x);
 		oldParent = x.parent;
 		this.key = x.key;
 		this.state = x.state;//constructor
@@ -48,6 +53,7 @@ public class EightPuzzleState extends BaseState{
 	}
 
 	public EightPuzzleState(int[][] state , EightPuzzleState parent){
+		super(parent);
 		dir = parent.dir;
 		this.state = state;//constructor
 		this.parent = parent;
@@ -56,10 +62,11 @@ public class EightPuzzleState extends BaseState{
 		g_val = parent.getGval() + 1;
 		calcPH();
 		f_val = g_val + h_val;
-		setKey();
+		generateKey();
 	}
 
 	public EightPuzzleState(int[][] state , EightPuzzleState parent, boolean asdf){
+		super(parent);
 		this.origin = parent.origin;
 		dir = parent.dir;
 		this.state = state;//constructor
@@ -69,7 +76,7 @@ public class EightPuzzleState extends BaseState{
 		g_val = parent.getGval() + 1;
 		calcPH();
 		f_val = g_val + h_val;
-		setKey();
+		generateKey();
 	}
 
 	//this method changes a goal state into a lookup table to help
@@ -87,15 +94,18 @@ public class EightPuzzleState extends BaseState{
 	}
 
 
-	public void setKey(){
+	public void generateKey(){
 
+		String tempKey = "";
+		
 		for(int i = 0; i < 4; i++)
 			for(int j = 0; j < 4; j++)
 				if(i == 3 && j ==3)
-					key += state[i][j];
+					tempKey += state[i][j];
 				else
-					key += state[i][j] + " ";
+					tempKey += state[i][j] + " ";
 
+		key = tempKey.hashCode();
 	}
 	//==================================================================
 	//                        ACCESSORS AND MUTATORS
@@ -113,8 +123,8 @@ public class EightPuzzleState extends BaseState{
 		double min = 1337;
 		for(int i = 0; i < perimeter.size(); i++){
 			transformTable(perimeter.get(i).state);
-			if(min > calcH() + perimeter.get(i).g_val){
-				min = calcH() + perimeter.get(i).g_val;
+			if(min > calcHValue() + perimeter.get(i).g_val){
+				min = calcHValue() + perimeter.get(i).g_val;
 			}
 		}
 
@@ -151,7 +161,7 @@ public class EightPuzzleState extends BaseState{
 	}
 
 
-	public double calcH(){
+	public double calcHValue(){
 		double sum = 0;
 
 		for(int i=0; i < 4; i++){
@@ -276,7 +286,7 @@ public class EightPuzzleState extends BaseState{
 	}
 
 
-	public EightPuzzleState[] getNeighbors(){
+	public EightPuzzleState[] getNeighbours(){
 
 
 
@@ -458,13 +468,10 @@ public class EightPuzzleState extends BaseState{
 		return sum*ep;
 	}
 
-
-
-
-	@Override
-	public int compareTo(EightPuzzleState x) {
-		return (int) (this.f_val - x.f_val);
+	public int getKey(){
+		return key;
 	}
+
 
 	public String writeData(int d, double fl) {
 

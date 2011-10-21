@@ -342,7 +342,7 @@ public class ADIStarAlgorithm {
 				//				System.out.println(current.g_val + " " + current.h_val + " " + current.f_val);
 
 				//expand current
-				PEightPuzzle[] neighbours = current.getNeighbors(); 
+				PEightPuzzle[] neighbours = current.getNeighbours(); 
 				expanded[a] += neighbours.length;
 
 				for(int i = 0; i < neighbours.length; i++){
@@ -454,7 +454,7 @@ public class ADIStarAlgorithm {
 			if(s.checkDup(start))
 				start = s;
 
-			FEightPuzzle[] neighbours = s.getNeighbors();
+			FEightPuzzle[] neighbours = s.getNeighbours();
 			expanded[a] += neighbours.length;
 			if(s.g_val > s.rhs){
 				//				System.out.print("G: " + s.g_val + " RHS: " + s.rhs);

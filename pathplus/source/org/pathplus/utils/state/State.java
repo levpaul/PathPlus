@@ -11,8 +11,16 @@ public interface State<T> extends Comparable<T>{
 	
 	
 	
-	
+	// Calculates and returns the Heuristic Value for a given State.
 	public double calcHValue();
+	
+	// Generates and sets the key used to store State in a Hashtable.
+	public void generateKey();
+	
+	// Returns the set of States which are reachable from this State.
+	public State<T>[] getNeighbours();
+	
+	
 	
 	
 	// Getters implemented by BaseState
@@ -27,8 +35,8 @@ public interface State<T> extends Comparable<T>{
 	// Returns the g-value added to the h-value
 	public double getFVal();
 
-	// Returns the unique key used 
-	public double getKey();
+	// Returns the unique key used to store State in a Hashtable.
+	public int getKey();
 	
 
 	

@@ -86,7 +86,7 @@ public class GAStarAlgorithm {
 			 
 			
 			while(li.isEmpty() != true){
-				fdist[(int) li.remove(0).calcH()]++;
+				fdist[(int) li.remove(0).calcHValue()]++;
 			}
 			
 			int fTot = 0;
@@ -201,7 +201,7 @@ public class GAStarAlgorithm {
 					 bdist = new int[31];
 					
 					while(list.isEmpty() != true){
-						bdist[(int) list.remove(0).calcH()]++;
+						bdist[(int) list.remove(0).calcHValue()]++;
 					}
 					
 					
@@ -628,7 +628,7 @@ public class GAStarAlgorithm {
 			ftime[0] += System.currentTimeMillis() - ti;
 			ti = System.currentTimeMillis();
 
-			FEightPuzzle[] neighbours = current.getNeighbors();
+			FEightPuzzle[] neighbours = current.getNeighbours();
 
 
 			//===============================================================================================

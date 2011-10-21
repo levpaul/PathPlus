@@ -386,7 +386,7 @@ public class BiMaxAlgorithm extends BaseAlgorithm{
 
 		boolean trim = false; //step 1
 
-		MEightPuzzle[] neighbours = m.getNeighbors();
+		MEightPuzzle[] neighbours = m.getNeighbours();
 
 		for(int z = 0; z < neighbours.length; z++){
 			MEightPuzzle n = neighbours[z];//step 2
