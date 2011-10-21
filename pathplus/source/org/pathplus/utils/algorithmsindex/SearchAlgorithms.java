@@ -25,15 +25,21 @@ public class SearchAlgorithms {
 	// TODO Add reference to the paper - implement the algorithm.
 	public static final int BIMAX_BSF = 1;
 	
+	// An algorithm created by Dr Mike Barley and myself. Good performing bidirectional.
+	public static final int GA_STAR = 2;
 	
 	// HPA* is a very commonly used hierarchical pathfinding algorithm in video games.
 	// TODO Add reference to Adi Botea.
 	public static final int HPA_STAR = 2;
 	
-	// Automatically Repairing A* - A good weighted A* algorithm
+	// A Dynamic* - A good dynamic weighted A* algorithm
 	// TODO Add reference to the paper - implement the algorithm.
-	public static final int ARA_STAR = 1000;
-
+	public static final int AD_STAR = 1000;
+	
+	// An algorithm create by myself, Levi Lovelock
+	// Dynamic, bidirectional and weighted, good performance.
+	public static final int ADI_STAR = 1001;
+	
 
 
 }
