@@ -1,11 +1,13 @@
 package org.pathplus.algorithms.implementations;
 
-import java.io.*;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.PriorityQueue;
 
+import org.pathplus.algorithms.BaseAlgorithm;
+import org.pathplus.utils.path.PathResult;
 import org.pathplus.utils.state.BaseState;
 
-public class AStarAlgorithm<PathResult, BaseState> {
+public class AStarAlgorithm extends BaseAlgorithm {
 
 	private PriorityQueue<BaseState> forwardOpenList = new PriorityQueue<BaseState>();
 
@@ -16,45 +18,24 @@ public class AStarAlgorithm<PathResult, BaseState> {
 	private BaseState backInit;
 	private BaseState forwardInit;
 
-	private BufferedWriter bw;
-
-	private int evals, t_evals, a;
-	private int[] lengths;
-	private long timer;
-
 	BaseState middle = null;
 
-	private double fLim = 0;
-	private int[] gCounts = new int[100];
-
-	private int numVals = 0;
-	private String problem;
-	private int ttime, tspace;
 	private long tstart;
-	private boolean timeUp = false;
+	private double fLim;
 
-	public void search(BaseState start, BaseState goal) {
+	public PathResult search(BaseState start, BaseState goal) {
 
-		double time = System.currentTimeMillis();
-		t_evals = 0;
-		int space = 0;
-		int length = 0;
-		double t_time = 0, t_space = 0, t_length = 0;
+		start.setGoalState(goal);
 
-		int numProblems = 100;
+		fLim = start.getFVal();
 
-		lengths = new int[numProblems];
-
-		System.out.println("Start state: " + forwardInit + "\nGoal state: "
-				+ backInit);
-
-		fLim = forwardInit.getFVal();
-
-		forwardOpenList.add(forwardInit);
-		fol.put(forwardInit.getKey(), forwardInit);
+		forwardOpenList.add(start);
+		fol.put(start.getKey(), start);
 
 		forwardSearch();
 
+		// TODO Implement the return of a PathResult.
+		return null;
 	}
 
 	private boolean forwardSearch() {
@@ -63,15 +44,7 @@ public class AStarAlgorithm<PathResult, BaseState> {
 
 		while (forwardOpenList.size() > 0) {
 
-			if (System.currentTimeMillis() - tstart > 12600000) {
-				timeUp = true;
-				return false;
-
-			}
-
 			current = forwardOpenList.poll();
-
-			gCounts[(int) current.calcHValue()]++;
 
 			fol.remove(current.getKey());
 			forwardClosedList.put(current.getKey(), current);
@@ -83,14 +56,10 @@ public class AStarAlgorithm<PathResult, BaseState> {
 			for (int i = 0; i < neighbours.length; i++) {
 				boolean isInClosed = false;
 
+				/*
+				 * check that new node isn't in closed list
+				 */
 				if (forwardClosedList.containsKey(neighbours[i].getKey())) {// check
-					// that
-					// new
-					// node
-					// isn't
-					// in
-					// closed
-					// list
 					isInClosed = true;
 				}
 
@@ -101,14 +70,12 @@ public class AStarAlgorithm<PathResult, BaseState> {
 				}// end if
 
 				if (isInClosed == false) {
-					if (neighbours[i].getKey() == backInit.getKey()) {// check
-																		// if
-																		// node
-																		// is a
-																		// goal
+					if (neighbours[i].getKey() == backInit.getKey()) {
+						/*
+						 * check if node is a goal
+						 */
 						middle = neighbours[i];
 						System.out.println(neighbours[i] + "\n" + backInit);
-						lengths[a] = (int) neighbours[i].getGVal();
 						return false;
 					}
 				}
