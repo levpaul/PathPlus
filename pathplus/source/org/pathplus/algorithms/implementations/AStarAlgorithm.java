@@ -11,34 +11,31 @@ public class AStarAlgorithm extends BaseAlgorithm {
 
 	private PriorityQueue<BaseState> forwardOpenList = new PriorityQueue<BaseState>();
 
-	private Hashtable<Integer, BaseState> fol = new Hashtable<Integer, BaseState>(
-			200000);
-	private Hashtable<Integer, BaseState> forwardClosedList = new Hashtable<Integer, BaseState>(
-			200000);
-	private BaseState backInit;
-	private BaseState forwardInit;
+	private Hashtable<Integer, BaseState> fol = new Hashtable<Integer, BaseState>();
+	private Hashtable<Integer, BaseState> forwardClosedList = new Hashtable<Integer, BaseState>();
 
-	BaseState middle = null;
-
-	private long tstart;
-	private double fLim;
+	BaseState endState = null;
 
 	public PathResult search(BaseState start, BaseState goal) {
 
 		start.setGoalState(goal);
 
-		fLim = start.getFVal();
-
 		forwardOpenList.add(start);
 		fol.put(start.getKey(), start);
 
-		forwardSearch();
+		if (forwardSearch(goal)) {
+			// TODO Implement the return of a PathResult.
+			return getPath(endState);
+		} else
+			return null;
+	}
 
-		// TODO Implement the return of a PathResult.
+	private PathResult getPath(BaseState endState2) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private boolean forwardSearch() {
+	private boolean forwardSearch(BaseState goalState) {
 
 		BaseState current = null;
 
@@ -70,12 +67,11 @@ public class AStarAlgorithm extends BaseAlgorithm {
 				}// end if
 
 				if (isInClosed == false) {
-					if (neighbours[i].getKey() == backInit.getKey()) {
+					if (neighbours[i].getKey() == goalState.getKey()) {
 						/*
 						 * check if node is a goal
 						 */
-						middle = neighbours[i];
-						System.out.println(neighbours[i] + "\n" + backInit);
+						endState = neighbours[i];
 						return false;
 					}
 				}
