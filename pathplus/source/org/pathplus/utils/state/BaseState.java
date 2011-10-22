@@ -12,28 +12,29 @@ public abstract class BaseState implements State<BaseState>{
 	
 	private double fValue, gValue, hValue;
 	private BaseState parent;
+	private BaseState goalState;
 	
 	// Constructors.
 	
-	public BaseState(){
+	public BaseState(BaseState goalState){
+		this.goalState = goalState;
 		gValue = 0;
 		hValue = calcHValue();
 		fValue = gValue + hValue;
 		parent = null;
 	}
 	
-	/**
-	 * 
-	 * @param parent
-	 */
-	public BaseState(BaseState parent){
-		gValue = parent.gValue + 1;
-		hValue = calcHValue();
-		fValue = gValue + hValue;
-	}
-	
 	
 	// Getters and Setters.
+	
+	public BaseState getGoalState(){
+		return goalState;
+	}
+	
+	public void setGoalState(BaseState goalState){
+		this.goalState = goalState;
+		hValue = calcHValue();
+	}
 	
 	public BaseState getParent(){
 		return parent;

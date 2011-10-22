@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.pathplus.utils.state.BaseState;
 
-public class AStarAlgorithm {
+public class AStarAlgorithm<PathResult, BaseState> {
 
 	private PriorityQueue<BaseState> forwardOpenList = new PriorityQueue<BaseState>();
 
