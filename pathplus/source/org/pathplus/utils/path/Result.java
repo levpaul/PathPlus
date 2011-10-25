@@ -1,6 +1,6 @@
 package org.pathplus.utils.path;
 
-import org.pathplus.utils.state.BaseState;
+import org.pathplus.utils.state.State;
 
 
 /**
@@ -8,8 +8,18 @@ import org.pathplus.utils.state.BaseState;
  * @author levi.lovelock
  *
  */
-public interface Result{
+public interface Result <T extends State<T>>{
 
-	public BaseState[] toArray();
+	public T[] toArray();
+	
+	public double getLength();
+	
+	public T getGoalState();
+	public void setGoalState(T goalState);
+	
+	public T getStartState();
+	public void setStartState(T startState);
+	
+	
 	
 }

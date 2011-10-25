@@ -3,20 +3,20 @@ package org.pathplus.algorithms.implementations;
 import java.util.Hashtable;
 import java.util.PriorityQueue;
 
-import org.pathplus.algorithms.BaseAlgorithm;
+import org.pathplus.algorithms.Algorithm;
 import org.pathplus.utils.path.PathResult;
-import org.pathplus.utils.state.BaseState;
+import org.pathplus.utils.state.State;
 
-public class AStarAlgorithm extends BaseAlgorithm {
+public class AStarAlgorithm<T extends State<T>> implements Algorithm<T> {
 
-	private PriorityQueue<BaseState> forwardOpenList = new PriorityQueue<BaseState>();
+	private PriorityQueue<T> forwardOpenList = new PriorityQueue<T>();
 
-	private Hashtable<Integer, BaseState> fol = new Hashtable<Integer, BaseState>();
-	private Hashtable<Integer, BaseState> forwardClosedList = new Hashtable<Integer, BaseState>();
+	private Hashtable<Integer, T> fol = new Hashtable<Integer, T>();
+	private Hashtable<Integer, T> forwardClosedList = new Hashtable<Integer, T>();
 
-	BaseState endState = null;
+	T endState = null;
 
-	public PathResult search(BaseState start, BaseState goal) {
+	public PathResult<T> search(T start, T goal) {
 
 		start.setGoalState(goal);
 
@@ -25,19 +25,16 @@ public class AStarAlgorithm extends BaseAlgorithm {
 
 		if (forwardSearch(goal)) {
 			// TODO Implement the return of a PathResult.
-			return getPath(endState);
+			return new PathResult<T>(endState);
 		} else
 			return null;
 	}
 
-	private PathResult getPath(BaseState endState2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	private boolean forwardSearch(BaseState goalState) {
 
-		BaseState current = null;
+	private boolean forwardSearch(T goalState) {
+
+		T current = null;
 
 		while (forwardOpenList.size() > 0) {
 
@@ -46,7 +43,7 @@ public class AStarAlgorithm extends BaseAlgorithm {
 			fol.remove(current.getKey());
 			forwardClosedList.put(current.getKey(), current);
 
-			BaseState[] neighbours = current.getNeighbours();
+			T[] neighbours = current.getNeighbours();
 
 			// go through possible neighbours and add them if they are NOT in
 			// the closed list or in the openlist
@@ -60,8 +57,10 @@ public class AStarAlgorithm extends BaseAlgorithm {
 					isInClosed = true;
 				}
 
-				if (isInClosed == false) {// check that new node isn't in
-											// openlist
+				if (isInClosed == false) {
+					// check that new node isn't in openlist, this is why we
+					// augment the openlist priority queue with a hashtable, to make
+					// this check much quicker.
 					if (fol.containsKey(neighbours[i].getKey()))
 						isInClosed = true;
 				}// end if

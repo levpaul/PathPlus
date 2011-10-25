@@ -18,7 +18,7 @@ public interface State<T> extends Comparable<T>{
 	public void generateKey();
 	
 	// Returns the set of States which are reachable from this State.
-	public State<T>[] getNeighbours();
+	public T[] getNeighbours();
 	
 	
 	
@@ -38,6 +38,12 @@ public interface State<T> extends Comparable<T>{
 	// Returns the unique key used to store State in a Hashtable.
 	public int getKey();
 	
-
+	public void setGoalState(T goalState);
+	
+	public T getGoalState();
+	
+	public void setParent(T parent);
+	
+	public T getParent();
 	
 }
