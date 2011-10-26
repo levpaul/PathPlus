@@ -4,10 +4,10 @@ package org.pathplus.utils.state;
  * 
  * @author levi.lovelock
  *
- * @param <T> to make the state comparable for use in Java Priority Queues.
+ * @param <State> to make the state comparable for use in Java Priority Queues.
  */
 
-public interface State<T> extends Comparable<T>{
+public interface State<State> extends Comparable<State>{
 	
 	
 	
@@ -18,9 +18,7 @@ public interface State<T> extends Comparable<T>{
 	public void generateKey();
 	
 	// Returns the set of States which are reachable from this State.
-	public T[] getNeighbours();
-	
-	
+	public <T extends State> T[] getNeighbours();
 	
 	
 	// Getters implemented by BaseState
@@ -38,12 +36,12 @@ public interface State<T> extends Comparable<T>{
 	// Returns the unique key used to store State in a Hashtable.
 	public int getKey();
 	
-	public void setGoalState(T goalState);
+	public void setGoalState(State goalState);
 	
-	public T getGoalState();
+	public State getGoalState();
 	
-	public void setParent(T parent);
+	public void setParent(State parent);
 	
-	public T getParent();
+	public State getParent();
 	
 }

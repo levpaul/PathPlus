@@ -24,7 +24,6 @@ public class AStarAlgorithm<T extends State<T>> implements Algorithm<T> {
 		fol.put(start.getKey(), start);
 
 		if (forwardSearch(goal)) {
-			// TODO Implement the return of a PathResult.
 			return new PathResult<T>(endState);
 		} else
 			return null;
@@ -43,7 +42,7 @@ public class AStarAlgorithm<T extends State<T>> implements Algorithm<T> {
 			fol.remove(current.getKey());
 			forwardClosedList.put(current.getKey(), current);
 
-			T[] neighbours = current.getNeighbours();
+			T[] neighbours = (T[]) current.getNeighbours();
 
 			// go through possible neighbours and add them if they are NOT in
 			// the closed list or in the openlist
@@ -81,7 +80,7 @@ public class AStarAlgorithm<T extends State<T>> implements Algorithm<T> {
 					fol.put(neighbours[i].getKey(), neighbours[i]);
 					forwardOpenList.add(neighbours[i]);
 				}// end if
-			}// end outter for
+			}// end outer for
 		}// END WHILE LOOP
 
 		return true;

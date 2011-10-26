@@ -2,10 +2,8 @@ package org.pathplus.utils.path;
 
 import java.util.ArrayList;
 
-import org.pathplus.utils.state.BaseState;
 import org.pathplus.utils.state.State;
 
-// TODO Sort this out as soon as possible.
 public class PathResult<T extends State<T>> implements Result<T> {
 
 	private T startState,  goalState;
@@ -22,15 +20,15 @@ public class PathResult<T extends State<T>> implements Result<T> {
 		T current = this.goalState;
 		
 		while(current.getParent() != null){
-			pathArrayList.add(current.getParent());
-			current = current.getParent();
+			pathArrayList.add((T) current.getParent());
+			current = (T) current.getParent();
 		}
 	}
 
-	// TODO fix this immediately.
-	@SuppressWarnings("unchecked")
 	public T[] toArray() {
-		return pathArrayList.toArray(new T[pathArrayList.size()]);
+		@SuppressWarnings("unchecked") //TODO Fix it.
+		T[] tempArray = (T[]) pathArrayList.toArray();
+		return tempArray;
 	}
 
 	public double getLength() {

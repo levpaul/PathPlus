@@ -6,7 +6,7 @@ import org.pathplus.utils.state.State;
 
 public interface Algorithm<T extends State<T>> {
 	
-	// TODO - fix this inheritence issue.
+	// TODO - fix this inheritance issue.
 	public Result<T> search(T start, T goal);
 	
 }
