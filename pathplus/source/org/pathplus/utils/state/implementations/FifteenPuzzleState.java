@@ -4,8 +4,7 @@ import java.awt.Point;
 
 import org.pathplus.utils.state.State;
 
-
-public class FifteenPuzzleState implements State<FifteenPuzzleState>{
+public class FifteenPuzzleState implements State<FifteenPuzzleState> {
 
 	public int[][] state;
 	public double g_val = 0;
@@ -313,9 +312,6 @@ public class FifteenPuzzleState implements State<FifteenPuzzleState>{
 	public int compareTo(FifteenPuzzleState other) {
 		return (int) (this.f_val - other.getFVal());
 	}
-
-
-
 
 
 }

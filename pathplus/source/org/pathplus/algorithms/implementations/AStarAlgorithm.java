@@ -23,13 +23,11 @@ public class AStarAlgorithm<T extends State<T>> implements Algorithm<T> {
 		forwardOpenList.add(start);
 		fol.put(start.getKey(), start);
 
-		if (forwardSearch(goal)) {
+		if (!forwardSearch(goal)) {
 			return new PathResult<T>(endState);
 		} else
 			return null;
 	}
-
-
 
 	private boolean forwardSearch(T goalState) {
 
@@ -49,32 +47,29 @@ public class AStarAlgorithm<T extends State<T>> implements Algorithm<T> {
 			for (int i = 0; i < neighbours.length; i++) {
 				boolean isInClosed = false;
 
-				/*
-				 * check that new node isn't in closed list
-				 */
+				
+				// Check that new node isn't in the closed list.
 				if (forwardClosedList.containsKey(neighbours[i].getKey())) {// check
 					isInClosed = true;
 				}
 
 				if (isInClosed == false) {
 					// check that new node isn't in openlist, this is why we
-					// augment the openlist priority queue with a hashtable, to make
-					// this check much quicker.
+					// augment the openlist priority queue with a hashtable, to
+					// make this check much quicker.
 					if (fol.containsKey(neighbours[i].getKey()))
 						isInClosed = true;
 				}// end if
 
 				if (isInClosed == false) {
+					// Check if the new neighbour is a goal.
 					if (neighbours[i].getKey() == goalState.getKey()) {
-						/*
-						 * check if node is a goal
-						 */
 						endState = neighbours[i];
 						return false;
 					}
 				}
 				// now we know the node is not in open or closed and is not
-				// goal, so we can add to openList
+				// goal, so we can add to the openList
 
 				if (isInClosed == false) {
 					fol.put(neighbours[i].getKey(), neighbours[i]);

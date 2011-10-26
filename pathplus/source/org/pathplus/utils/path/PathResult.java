@@ -12,12 +12,13 @@ public class PathResult<T extends State<T>> implements Result<T> {
 	public PathResult(T goalState){
 		generatePathArrayList(goalState);
 		startState = pathArrayList.get(pathArrayList.size() - 1);
-		goalState = pathArrayList.get(0);
+		this.goalState = pathArrayList.get(0);
 	}
 	
 	private void generatePathArrayList(T goalState) {
 		pathArrayList = new ArrayList<T>();
-		T current = this.goalState;
+		T current = goalState;
+		pathArrayList.add(current);
 		
 		while(current.getParent() != null){
 			pathArrayList.add((T) current.getParent());
