@@ -33,7 +33,7 @@ public class PathResult<T extends State<T>> implements Result<T> {
 	}
 
 	public double getLength() {
-		return goalState.getGVal();
+		return pathArrayList.size() - 1;
 	}
 
 	public T getGoalState() {

@@ -4,40 +4,40 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.PriorityQueue;
 
-import org.pathplus.algorithms.BaseAlgorithm;
+import org.pathplus.algorithms.Algorithm;
 import org.pathplus.utils.path.PathResult;
-import org.pathplus.utils.state.BaseState;
+import org.pathplus.utils.state.State;
 
-public class BiMaxAlgorithm extends BaseAlgorithm {
+public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 
-	private ArrayList<PriorityQueue<BaseState>> ol = new ArrayList<PriorityQueue<BaseState>>();
-	private Hashtable<Integer, BaseState>[] cl = new Hashtable[2];
-	private Hashtable<Integer, BaseState>[] hol = new Hashtable[2];
+	private ArrayList<PriorityQueue<T>> ol = new ArrayList<PriorityQueue<T>>();
+	private Hashtable<Integer, T>[] cl = new Hashtable[2];
+	private Hashtable<Integer, T>[] hol = new Hashtable[2];
 	private int count = 0;
 
-	// private ArrayList<EightPuzzle> forwardClosedList = new
-	// ArrayList<EightPuzzle>();
-
 	private double[] fmin = new double[2];
-	private BaseState[] hval = new BaseState[2];
 
-	private int l_min = 99999999;
+	private int l_min = 99999999, l;
 
-	private int l;
-
-	BaseState middle = null;
-
-	private int d = 0, od = 0, a;
+	private int d = 0, od = 0;
 	private double[] flim = new double[2];
 	private int[] lengths;
+
+	private T startGoal, goalGoal, otherMiddle, middle;
 
 	private ArrayList<ArrayList<Integer>> fEx = new ArrayList<ArrayList<Integer>>(
 			2);
 
-	public PathResult start(BaseState start, BaseState goal) {
+	public PathResult<T> search(T start, T goal) {
 
-		ol.add(new PriorityQueue<BaseState>());
-		ol.add(new PriorityQueue<BaseState>());
+		cl[0] = new Hashtable<Integer, T>();
+		cl[1] = new Hashtable<Integer, T>();
+
+		hol[0] = new Hashtable<Integer, T>();
+		hol[1] = new Hashtable<Integer, T>();
+
+		ol.add(new PriorityQueue<T>());
+		ol.add(new PriorityQueue<T>());
 
 		start.setGoalState(goal);
 		goal.setGoalState(start);
@@ -55,16 +55,10 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 		ol.get(1).add(goal);
 
 		// used to store opposite goal states for DIFF method
-		hval[0] = start;
-		hval[1] = goal;
+		startGoal = start;
+		goalGoal = goal;
 
 		while (!ol.get(0).isEmpty() && !ol.get(1).isEmpty()) {// step 4
-			// if(++count % 1000 == 0)
-			// System.out.println("fol: " + ol.get(0).size() + ", bol: " +
-			// ol.get(1).size() + "\tfcl: " + cl[0].size() + ", bcl: " +
-			// cl[1].size() + "  \t\ttotal: " + (ol.get(0).size() +
-			// ol.get(1).size() + cl[0].size() + cl[1].size()) + "\tlim: " +
-			// l_min);
 
 			// we are suppose to set the direction based on cardinality
 			// principle AFTER an f-limit has been drained
@@ -78,9 +72,7 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 			fmin[od] = 999999; // step 1, 2, 3 complete
 
 			while (true) {// search until no nodes remain within flim
-				BaseState current = null;
-
-				System.out.println("flim: " + flim[d] + " dir: " + d);
+				T current = null;
 
 				if (ol.get(d).size() > 0
 						&& ol.get(d).peek().getFVal() <= flim[d]) {
@@ -102,29 +94,14 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 				cl[d].put(current.getKey(), current);// step 9
 
 				if (cl[od].containsKey(current.getKey())) {// step 10
-					System.out.println("got something: length of "
-							+ (current.getGVal() + ((BaseState) (cl[od]
-									.get(current.getKey()))).getGVal())
-							+ " when lmin is: " + l_min);
 					// nip current in od and prune od
 
 					// Nipping is done by NOT expanding current, which the if
 					// statement takes care of
 
-					// System.out.println("lmin = " + l_min + ", path = " +
-					// (((EightPuzzle) (cl[od].get(current.getKey()))).getGVal()
-					// + current.getGVal()));
-
 					// pruning part
 
-					Object[] t = ol.get(od).toArray();
-					BaseState[] temp = new BaseState[t.length];
-
-					for (int i = 0; i < t.length; i++) {
-						temp[i] = (BaseState) t[i];
-					}
-
-					t = null;
+					Object[] temp =  ol.get(od).toArray();
 
 					/*
 					 * go through openlist and find decendents of matcher - what
@@ -132,11 +109,10 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 					 * down?????
 					 */
 					for (int i = 0; i < temp.length; i++) {
-						if (temp[i].getParent().getKey() == (current.getKey())) {
-							cl[od].put(temp[i].getKey(), temp[i]);
-							ol.get(od).remove(temp[i]);
+						if (((T)(temp[i])).getParent().getKey() == (current.getKey())) {
+							cl[od].put(((T)(temp[i])).getKey(), ((T)(temp[i])));
+							ol.get(od).remove(((T)(temp[i])));
 							hol[od].remove(current.getKey());
-							// i--;
 						}
 
 					}
@@ -146,67 +122,59 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 					// omega m is the set of nodes which are parents (?)
 
 				} else {
-					// data = new BufferedWriter(new FileWriter("bimax.txt",
-					// true));
-					// data.write(current.writeData(d, flim[d]));
-					// data.close();
-					// System.out.println(++countex);
-					// if(countex == 73618)
-					// System.out.println(current);
 					expand(current);// step 13
 				}
 			}
 		}// end while
 
-		if (l_min > 1000)
-			System.out.println("NO PATH EXIST");
-		else {
-			System.out.println("The path was found with a length of " + l_min);
-			lengths[a] = l_min;
-			l += l_min;
+		if (l_min > 1000) {
+			return null;
+		} else {
+			
+			otherMiddle = otherMiddle.getParent();
+			T middleTemp = middle;
+			while (otherMiddle != null) {
+				
+					
+					T temp = otherMiddle.getParent();
+					otherMiddle.setParent(middleTemp);
+					middleTemp = otherMiddle;
+					otherMiddle = temp;
+				
+			}
+			return new PathResult<T>(middleTemp);
 		}
 
-		System.out.println("Found!");
-
-		BaseState current = middle;
-
-		return null;
 	}
 
-	public void expand(BaseState m) {
+	public void expand(T m) {
 
 		boolean trim = false; // step 1
 
-		BaseState[] neighbours = m.getNeighbours();
+		T[] neighbours = m.getNeighbours();
 
 		for (int z = 0; z < neighbours.length; z++) {
-			BaseState n = neighbours[z];// step 2
+			T n = neighbours[z];// step 2
 			// step 3 taken care of inside EightPuzzle
 
-			// System.out.println("g1: " + n.getGVal() + "   h2: " +
-			// hval[d].calcH(n) );
-			// if(n.calcH() - hval[od].calcH(n) != 0)
-			// System.out.println(5/0);
-			//
-			// double fd = Math.max(n.getFVal(), fmin[od] + n.getGVal() -
-			// hval[od].calcH(n));//step 4
-
+			// step 4
 			double fd = n.getFVal();
 			count++;
 
-			BaseState temp;
+			T temp;
 
 			if (fd < l_min) {
 				// step 5 taken care of inside eightpuzzle (calc f val)
 
-				if (!cl[d].containsKey(n.getKey())) {// if n is not in the
-														// closed list on its
-														// own side
+				if (!cl[d].containsKey(n.getKey())) {
+					// if n is not in the
+					// closed list on its
+					// own side
 
 					boolean inOpen = false;
-					BaseState otherNode = null;
+					T otherNode = null;
 
-					otherNode = (BaseState) hol[d].get(n.getKey());
+					otherNode = (T) hol[d].get(n.getKey());
 
 					inOpen = hol[d].containsKey(n.getKey());
 
@@ -214,22 +182,22 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 					// ===================STEP 6=====================
 					// done
 
-					if (!inOpen) {// if n is not in the open list on its own
-									// side (and closed list)
+					if (!inOpen) {
+						/*
+						 * if n is not in the open list on its own side (and
+						 * closed list)
+						 */
 
 						// step 7 done in creation of n in eightpuzzle
 
 						ol.get(d).add(n);// step 8
 						hol[d].put(n.getKey(), n);
 
-					} else if (n.getGVal() < otherNode.getGVal()) {// step 9 -
-																	// new path
-																	// to
-																	// duplicate
-																	// OL node
-																	// found
-																	// which is
-																	// shorter
+					} else if (n.getGVal() < otherNode.getGVal()) {
+						/*
+						 * step 9 - new path to duplicate OL node found which is
+						 * shorter
+						 */
 
 						hol[d].remove(otherNode);
 
@@ -240,11 +208,10 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 					}// end elseif
 
 				} else {// when node n was already in the closed list
-					temp = (BaseState) cl[d].get(n.getKey());
+					temp = (T) cl[d].get(n.getKey());
 
 					if (temp.getGVal() > n.getGVal()) {// step 11
 						cl[d].remove(temp.getKey());// step 12
-						// System.out.println("shit" + cl[d].get(n.getKey()));
 						ol.get(d).add(n);// step 13
 						hol[d].put(n.getKey(), n);
 
@@ -252,14 +219,14 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 
 				}// now we know that the new node is not in its own tree
 
-				BaseState other = null;
+				T other = null;
 
 				if (cl[od].containsKey(n.getKey())) {
-					other = (BaseState) cl[od].get(n.getKey());
+					other = (T) cl[od].get(n.getKey());
 				} else {
 
 					if (hol[od].containsKey(n.getKey())) {
-						other = (BaseState) hol[od].get(n.getKey());
+						other = (T) hol[od].get(n.getKey());
 					}
 
 				}// end else
@@ -267,9 +234,9 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 				if (other != null) {// if n is in opposite tree
 
 					if (other.getGVal() + n.getGVal() < l_min) {// step 14
-						System.out.println(l_min + "\n" + n + "\n" + other);
 						l_min = (int) (other.getGVal() + n.getGVal());// step 15
 						middle = n;
+						otherMiddle = other;
 						trim = true;// step 17
 					}
 				}// end if
@@ -281,24 +248,17 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 		if (trim) {// step 18
 
 			for (int j = 0; j < 2; j++) {
-				Object[] t = ol.get(j).toArray();
-				BaseState[] temp = new BaseState[t.length];
-
-				for (int i = 0; i < t.length; i++) {
-					temp[i] = (BaseState) t[i];
-				}
-
-				t = null;
+				Object[] temp = ol.get(j).toArray();
 
 				for (int i = 0; i < temp.length; i++) {
 					// if(Math.max(ol.get(j).get(i).getFVal(), fmin[1-j] +
 					// ol.get(j).get(i).getGVal() -
 					// hval[1-j].calcH(ol.get(j).get(i))) >= l_min){
 
-					if (temp[i].getFVal() >= l_min) {
+					if (((T)(temp[i])).getFVal() >= l_min) {
 						ol.get(j).remove(i);
-						hol[j].remove(temp[i].getKey());
-						cl[j].put(temp[i].getKey(), temp[i]);
+						hol[j].remove(((T)(temp[i])).getKey());
+						cl[j].put(((T)(temp[i])).getKey(), ((T)(temp[i])));
 					}// end if (trimming condition)
 
 				}// end inner for
@@ -310,5 +270,4 @@ public class BiMaxAlgorithm extends BaseAlgorithm {
 		}
 
 	}// end expand
-
 }
