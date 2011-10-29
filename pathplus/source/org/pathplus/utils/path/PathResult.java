@@ -14,7 +14,12 @@ public class PathResult<T extends State<T>> implements Result<T> {
 		startState = pathArrayList.get(pathArrayList.size() - 1);
 		this.goalState = pathArrayList.get(0);
 	}
-	
+
+	// This method creates a new path from a given goalState.
+	/**
+	* @params goalState The final state which will link to the start state
+	* through its parents.
+	*/
 	private void generatePathArrayList(T goalState) {
 		pathArrayList = new ArrayList<T>();
 		T current = goalState;
