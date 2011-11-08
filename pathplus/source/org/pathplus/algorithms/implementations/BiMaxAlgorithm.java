@@ -251,11 +251,14 @@ public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 		if (trim) {// step 18
 
 			for (int j = 0; j < 2; j++) {
-				Iterator<T> temp = ol.get(j).iterator();
-
-				while(temp.hasNext()){
+//				Iterator<T> temp = ol.get(j).iterator();
 				
-					T curr = temp.next();
+				Object[] temp = ol.get(j).toArray();
+				
+//				while(temp.hasNext()){
+				for(int i = 0; i < temp.length; i++){
+					@SuppressWarnings("unchecked")
+					T curr = (T) temp[i];
 					if (curr.getFVal() >= l_min) {
 						ol.get(j).remove(curr); //TODO Optimise this line.
 						hol[j].remove(curr.getKey());
