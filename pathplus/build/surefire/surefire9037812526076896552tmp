@@ -1,0 +1,30 @@
+#surefire
+#Wed Feb 22 00:17:23 NZDT 2012
+testClassesDirectory=C\:\\pathplus\\PathPlus\\pathplus\\build\\test-classes
+classPathUrl.4=C\:\\Users\\levilovelock\\.m2\\repository\\junit\\junit\\4.10\\junit-4.10.jar
+classPathUrl.3=C\:\\Users\\levilovelock\\.m2\\repository\\org\\apache\\geronimo\\specs\\geronimo-jta_1.1_spec\\1.1.1\\geronimo-jta_1.1_spec-1.1.1.jar
+classPathUrl.2=C\:\\Users\\levilovelock\\.m2\\repository\\org\\neo4j\\neo4j-kernel\\1.6\\neo4j-kernel-1.6.jar
+useManifestOnlyJar=true
+classPathUrl.1=C\:\\pathplus\\PathPlus\\pathplus\\build\\classes
+reportsDirectory=C\:\\pathplus\\PathPlus\\pathplus\\build\\surefire-reports
+classPathUrl.0=C\:\\pathplus\\PathPlus\\pathplus\\build\\test-classes
+dirscanner.0=directoryScannerOptions
+providerConfiguration=org.apache.maven.surefire.junit4.JUnit4Provider
+testSuiteDefinitionTestSourceDirectory=C\:\\pathplus\\PathPlus\\pathplus\\test
+surefireClassPathUrl.1=C\:\\Users\\levilovelock\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-api\\2.7.1\\surefire-api-2.7.1.jar
+surefireClassPathUrl.0=C\:\\Users\\levilovelock\\.m2\\repository\\org\\apache\\maven\\surefire\\surefire-junit4\\2.7.1\\surefire-junit4-2.7.1.jar
+report.2=org.apache.maven.surefire.report.XMLReporter
+useSystemClassLoader=true
+report.1=org.apache.maven.surefire.report.BriefFileReporter
+report.0=org.apache.maven.surefire.report.ForkingConsoleReporter
+excludes0=**/*$*
+isTrimStackTrace=true
+dirscanner.0.params=C\:\\pathplus\\PathPlus\\pathplus\\build\\test-classes|[**/Test*.java, **/*Test.java, **/*TestCase.java]|[**/*$*]
+includes2=**/*TestCase.java
+enableAssertions=true
+failIfNoTests=false
+includes1=**/*Test.java
+dirscanner.0.types=java.io.File|java.util.ArrayList|java.util.ArrayList
+includes0=**/Test*.java
+childDelegation=false
+classPathUrl.5=C\:\\Users\\levilovelock\\.m2\\repository\\org\\hamcrest\\hamcrest-core\\1.1\\hamcrest-core-1.1.jar

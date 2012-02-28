@@ -1,0 +1,21 @@
+-------------------------------------------------------------------------------
+Test set: org.pathplus.algorithms.implementations.AStarAlgorithmTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 11.468 sec <<< FAILURE!
+testSearch(org.pathplus.algorithms.implementations.AStarAlgorithmTest)  Time elapsed: 11.443 sec  <<< ERROR!
+java.lang.Exception: test timed out after 10000 milliseconds
+	at java.lang.Integer.hashCode(Unknown Source)
+	at java.util.Hashtable.containsKey(Unknown Source)
+	at org.pathplus.algorithms.implementations.AStarAlgorithm.forwardSearch(AStarAlgorithm.java:52)
+	at org.pathplus.algorithms.implementations.AStarAlgorithm.search(AStarAlgorithm.java:26)
+	at org.pathplus.algorithms.implementations.AStarAlgorithmTest.testSearch(AStarAlgorithmTest.java:28)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:45)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:42)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:20)
+	at org.junit.internal.runners.statements.FailOnTimeout$StatementThread.run(FailOnTimeout.java:62)
+

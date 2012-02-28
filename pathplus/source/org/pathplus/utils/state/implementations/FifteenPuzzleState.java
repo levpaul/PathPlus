@@ -313,5 +313,34 @@ public class FifteenPuzzleState implements State<FifteenPuzzleState> {
 		return (int) (this.f_val - other.getFVal());
 	}
 
+	// =================================================================
+	// TOSTRING METHODS (FOR NEO4J)
+	// =================================================================
+
+	public String stateToString() {
+		String stateString = this.toString();
+		return stateString;
+	}
+
+	public String neighboursToString() {
+		String neighboursString = "";
+
+		FifteenPuzzleState[] neighbours = getNeighbours();
+
+		for (FifteenPuzzleState n : neighbours)
+			neighboursString += n.toString() + "\n";
+
+		return neighboursString;
+	}
+
+	public String parentToString() {
+
+		if (parent == null) {
+			return "null";
+		} else {
+			String parentString = parent.toString();
+			return parentString;
+		}
+	}
 
 }

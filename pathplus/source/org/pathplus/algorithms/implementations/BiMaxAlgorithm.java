@@ -1,6 +1,7 @@
 package org.pathplus.algorithms.implementations;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -102,7 +103,7 @@ public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 
 					// pruning part
 
-					Iterator<T> temp =  ol.get(od).iterator();
+					Iterator<T> temp = ol.get(od).iterator();
 
 					temp.next();
 					/*
@@ -110,10 +111,10 @@ public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 					 * if the decendents are more than one node further
 					 * down?????
 					 */
-					while(temp.hasNext()){
+					while (temp.hasNext()) {
 						T curr = temp.next();
 						if (curr.getParent().getKey() == (current.getKey())) {
-							cl[od].put(curr.getKey(),curr);
+							cl[od].put(curr.getKey(), curr);
 							ol.get(od).remove(curr);
 							hol[od].remove(current.getKey());
 						}
@@ -133,17 +134,16 @@ public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 		if (l_min > 1000) {
 			return null;
 		} else {
-			
+
 			otherMiddle = otherMiddle.getParent();
 			T middleTemp = middle;
 			while (otherMiddle != null) {
-				
-					
-					T temp = otherMiddle.getParent();
-					otherMiddle.setParent(middleTemp);
-					middleTemp = otherMiddle;
-					otherMiddle = temp;
-				
+
+				T temp = otherMiddle.getParent();
+				otherMiddle.setParent(middleTemp);
+				middleTemp = otherMiddle;
+				otherMiddle = temp;
+
 			}
 			return new PathResult<T>(middleTemp);
 		}
@@ -251,16 +251,16 @@ public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 		if (trim) {// step 18
 
 			for (int j = 0; j < 2; j++) {
-//				Iterator<T> temp = ol.get(j).iterator();
-				
+				// Iterator<T> temp = ol.get(j).iterator();
+
 				Object[] temp = ol.get(j).toArray();
-				
-//				while(temp.hasNext()){
-				for(int i = 0; i < temp.length; i++){
+
+				// while(temp.hasNext()){
+				for (int i = 0; i < temp.length; i++) {
 					@SuppressWarnings("unchecked")
 					T curr = (T) temp[i];
 					if (curr.getFVal() >= l_min) {
-						ol.get(j).remove(curr); //TODO Optimise this line.
+						ol.get(j).remove(curr); // TODO Optimise this line.
 						hol[j].remove(curr.getKey());
 						cl[j].put(curr.getKey(), curr);
 					}// end if (trimming condition)
@@ -274,4 +274,17 @@ public class BiMaxAlgorithm<T extends State<T>> implements Algorithm<T> {
 		}
 
 	}// end expand
+
+	public Collection<T> getNodes() {
+		System.out.println("ol0: " + hol[0].size() + "\tol1: " + hol[1].size()
+				+ "\tcl0: " + cl[0].size() + "\tcl1: " + cl[1].size());
+
+		
+		cl[0].putAll(cl[1]);
+		
+		Collection<T> nodes = cl[0].values();
+
+		return nodes;
+
+	}
 }

@@ -9,7 +9,7 @@ import org.pathplus.utils.state.implementations.FifteenPuzzleState;
 
 public class AStarAlgorithmTest {
 
-	@Test (timeout = 300000)
+	@Test (timeout = 10000)
 	public void testSearch() {
 		AStarAlgorithm<FifteenPuzzleState> aStar = new AStarAlgorithm<FifteenPuzzleState>();
 
@@ -28,6 +28,8 @@ public class AStarAlgorithmTest {
 		PathResult<FifteenPuzzleState> result = aStar.search(start, goal);
 
 		assertTrue(result.getLength() == 42.0);
+		
+		
 
 	}
 

@@ -8,8 +8,7 @@ import org.pathplus.utils.state.implementations.FifteenPuzzleState;
 
 public class BiMaxAlgorithmTest {
 
-	@Test
-	/* (timeout = 10000) */
+	@Test (timeout = 10000) 
 	public void testSearch() {
 		BiMaxAlgorithm<FifteenPuzzleState> biMax = new BiMaxAlgorithm<FifteenPuzzleState>();
 
