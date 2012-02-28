@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: org.pathplus.algorithms.implementations.AStarAlgorithmTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 11.468 sec <<< FAILURE!
-testSearch(org.pathplus.algorithms.implementations.AStarAlgorithmTest)  Time elapsed: 11.443 sec  <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 10.157 sec <<< FAILURE!
+testSearch(org.pathplus.algorithms.implementations.AStarAlgorithmTest)  Time elapsed: 10.126 sec  <<< ERROR!
 java.lang.Exception: test timed out after 10000 milliseconds
 	at java.lang.Integer.hashCode(Unknown Source)
 	at java.util.Hashtable.containsKey(Unknown Source)

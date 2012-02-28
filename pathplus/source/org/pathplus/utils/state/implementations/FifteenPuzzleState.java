@@ -327,6 +327,8 @@ public class FifteenPuzzleState implements State<FifteenPuzzleState> {
 
 		FifteenPuzzleState[] neighbours = getNeighbours();
 
+		neighboursString = neighbours.length + "\n";
+		
 		for (FifteenPuzzleState n : neighbours)
 			neighboursString += n.toString() + "\n";
 
