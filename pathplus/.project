@@ -26,4 +26,10 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.maven.ide.eclipse.maven2Nature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>JAVA_HOME</name>
+			<value>file:/etc/java/jdk1.6.0_31</value>
+		</variable>
+	</variableList>
 </projectDescription>
